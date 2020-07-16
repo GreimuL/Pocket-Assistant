@@ -8,5 +8,5 @@ Just trying any functions as comes to mind.
     
 ## QnA
 Q. Why concept project name is "crawlertest"?    
-A. Cuz this PA(Pocket-Assistant) project cames to mind while trying to make crawler. Never mind.   
+A. Cuz this PA(Pocket-Assistant) project came to mind while trying to make crawler. Never mind.   
 
