@@ -1,7 +1,7 @@
 # Pocket-Assistant
 Pocket Assistant for Android   
    
-##Special thanks to:   
+## Special thanks to:   
 **Character drawings**   
 + WhiteCat - [@mintchoco54](https://www.instagram.com/mintchoco54)   
 
