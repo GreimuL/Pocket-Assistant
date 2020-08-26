@@ -1,6 +1,15 @@
 # Pocket-Assistant
 Pocket Assistant for Android   
    
+Special thanks to:   
+**Character drawings**   
++ WhiteCat - [@mintchoco54](https://www.instagram.com/mintchoco54)   
+
+   
+## Current Progress   
+<img src="./img/proto_1.gif" width="30%" height="30%">   
+   
+     
 ## Concept Version   
 Added features as they came to mind.   
      

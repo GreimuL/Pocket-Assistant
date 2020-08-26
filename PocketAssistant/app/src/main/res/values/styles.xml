@@ -1,0 +1,21 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="SplashMainTextStyle">
+        <item name="fontFamily">@font/font</item>
+        <item name="android:textSize">32sp</item>
+        <item name="color">@android:color/black</item>
+    </style>
+
+    <style name="CallButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">100dp</item>
+        <item name="android:textSize">32dp</item>
+    </style>
+
+</resources>
