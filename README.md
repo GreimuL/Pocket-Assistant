@@ -2,7 +2,7 @@
 Pocket Assistant for Android   
    
 ## Current Progress   
-<img src="./img/proto_1.gif" width="30%" height="30%">   
+<img src="./img/proto_2.gif" width="30%" height="30%">   
    
      
 ## Concept Version   

@@ -10,8 +10,7 @@ import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.Observer
-import com.greimul.pocketassistant.Characters.CharacterStandard
-import com.greimul.pocketassistant.Characters.WhiteCat
+import com.greimul.pocketassistant.Characters.*
 import kotlinx.android.synthetic.main.overlay_character.view.*
 
 class OverlayService: LifecycleService() {
@@ -23,6 +22,7 @@ class OverlayService: LifecycleService() {
     private lateinit var overlayChatView:View
     lateinit var overlayChar:CharacterStandard
     lateinit var mDetector:GestureDetectorCompat
+    var charType:Int? = 0
     inner class LocalBind(): Binder(){
         fun getService():OverlayService = this@OverlayService
     }
@@ -31,12 +31,25 @@ class OverlayService: LifecycleService() {
         return binder
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        windowManager.removeView(overlayCharView)
+    }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
         overlayCharView = LayoutInflater.from(this).inflate(R.layout.overlay_character,null)
         overlayChatView = LayoutInflater.from(this).inflate(R.layout.overlay_text_chat,null)
 
-        overlayChar = WhiteCat(overlayCharView,overlayChatView)
+        when(CharacterState.charType){
+            CharType.WhiteCat->{
+                overlayChar = WhiteCat(overlayCharView,overlayChatView)
+            }
+            CharType.ProtoBoy->{
+                overlayChar = ProtoBoy(overlayCharView,overlayChatView)
+            }
+        }
+
         layoutParams = overlayChar.paramInit
         windowManager.addView(overlayChar.getView(),layoutParams)
 
