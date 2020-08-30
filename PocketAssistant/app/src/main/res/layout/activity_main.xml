@@ -16,10 +16,23 @@
 
     </androidx.viewpager2.widget.ViewPager2>
 
-    <Button
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginRight="64dp"
+        android:background="?android:attr/listDivider" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/CallButtonStyle"
         android:id="@+id/button_call_character"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Call" />
+        android:text="Call"
+        android:layout_margin="16dp"
+        app:cornerRadius="100dp"
+        app:strokeWidth="4dp"
+        />
 </LinearLayout>
