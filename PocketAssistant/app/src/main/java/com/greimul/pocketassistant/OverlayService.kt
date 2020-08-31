@@ -3,6 +3,7 @@ package com.greimul.pocketassistant
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.AnimationDrawable
 import android.os.Binder
 import android.os.IBinder
 import android.view.*
@@ -22,6 +23,8 @@ class OverlayService: LifecycleService() {
     private lateinit var overlayChatView:View
     lateinit var overlayChar:CharacterStandard
     lateinit var mDetector:GestureDetectorCompat
+    lateinit var animMove:AnimationDrawable
+    var isAnimStart = false
     var charType:Int? = 0
     inner class LocalBind(): Binder(){
         fun getService():OverlayService = this@OverlayService
@@ -44,6 +47,7 @@ class OverlayService: LifecycleService() {
         when(CharacterState.charType){
             CharType.WhiteCat->{
                 overlayChar = WhiteCat(overlayCharView,overlayChatView)
+
             }
             CharType.ProtoBoy->{
                 overlayChar = ProtoBoy(overlayCharView,overlayChatView)
@@ -60,6 +64,12 @@ class OverlayService: LifecycleService() {
 
         mDetector = GestureDetectorCompat(this,GestureListener())
         overlayCharView.imageview_overlay_character.setOnTouchListener { v, event ->
+            when(event.action){
+                MotionEvent.ACTION_UP->{
+                    overlayChar.changeToNormalImg()
+                    isAnimStart = false
+                }
+            }
             mDetector.onTouchEvent(event)
             true
         }
@@ -75,6 +85,12 @@ class OverlayService: LifecycleService() {
             distanceX: Float,
             distanceY: Float
         ): Boolean {
+            if(!isAnimStart) {
+                overlayChar.changeToMoveAnim().start()
+                isAnimStart = true
+            }
+
+
             if(e2!=null) {
                 if(preY==null) {
                     preY = e2.rawY.toInt()

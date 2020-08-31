@@ -1,6 +1,7 @@
 package com.greimul.pocketassistant.Characters
 
 import android.graphics.PixelFormat
+import android.graphics.drawable.AnimationDrawable
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
@@ -11,7 +12,7 @@ import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.android.synthetic.main.overlay_character.view.*
 
-open class CharacterStandard(private val v:View,private val chatView:View){
+open class CharacterStandard(val v:View,val chatView:View){
     var paramInit:WindowManager.LayoutParams
     val layoutParams: MutableLiveData<WindowManager.LayoutParams> by lazy {
         MutableLiveData<WindowManager.LayoutParams>()
@@ -41,4 +42,8 @@ open class CharacterStandard(private val v:View,private val chatView:View){
             setBackgroundResource(res)
         }
     }
+
+    open fun changeToMoveAnim():AnimationDrawable = v.imageview_overlay_character.background as AnimationDrawable
+    open fun changeToNormalImg(){}
+
 }
