@@ -37,6 +37,7 @@ class OverlayService: LifecycleService() {
     override fun onDestroy() {
         super.onDestroy()
         windowManager.removeView(overlayCharView)
+        windowManager.removeView(overlayChatView)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -54,12 +55,15 @@ class OverlayService: LifecycleService() {
             }
         }
 
-        layoutParams = overlayChar.paramInit
-        windowManager.addView(overlayChar.getView(),layoutParams)
-
-        overlayChar.layoutParams.observe(this, Observer {
-            windowManager.updateViewLayout(overlayChar.getView(),it)
+        layoutParams = overlayChar.paramInitChar
+        windowManager.addView(overlayChar.chatView,overlayChar.paramInitChat)
+        windowManager.addView(overlayChar.v,overlayChar.paramInitChar)
+        overlayChar.layoutParamsChar.observe(this, Observer {
+            windowManager.updateViewLayout(overlayChar.v,it)
             layoutParams = it
+        })
+        overlayChar.layoutParamsChat.observe(this,Observer{
+            windowManager.updateViewLayout(overlayChar.chatView,it)
         })
 
         mDetector = GestureDetectorCompat(this,GestureListener())
