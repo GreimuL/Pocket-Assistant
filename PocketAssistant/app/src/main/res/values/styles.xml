@@ -25,16 +25,9 @@
         <item name="android:textSize">32dp</item>
     </style>
 
-    <style name="ChatBox" parent="Widget.MaterialComponents.Button">
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="shapeAppearance">@style/ChatBoxCorner</item>
+    <style name="ChatBox" parent="Theme.MaterialComponents">
         <item name="fontFamily">@font/font</item>
         <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="ChatBoxCorner">
-        <item name="cornerFamily">cut</item>
-        <item name="cornerSize">6dp</item>
     </style>
 
 </resources>

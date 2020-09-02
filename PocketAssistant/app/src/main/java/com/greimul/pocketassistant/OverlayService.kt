@@ -11,6 +11,7 @@ import androidx.core.view.GestureDetectorCompat
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.Observer
+import com.google.android.material.theme.MaterialComponentsViewInflater
 import com.greimul.pocketassistant.Characters.*
 import kotlinx.android.synthetic.main.overlay_character.view.*
 
@@ -42,36 +43,44 @@ class OverlayService: LifecycleService() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        overlayCharView = LayoutInflater.from(this).inflate(R.layout.overlay_character,null)
-        overlayChatView = LayoutInflater.from(this).inflate(R.layout.overlay_text_chat,null)
+        overlayCharView = View.inflate(this,R.layout.overlay_character,null)
+        overlayChatView = View.inflate(ContextThemeWrapper(this,R.style.ChatBox),R.layout.overlay_text_chat,null)
 
         when(CharacterState.charType){
             CharType.WhiteCat->{
-                overlayChar = WhiteCat(overlayCharView,overlayChatView)
-
+                overlayChar = WhiteCat(overlayCharView,overlayChatView,this)
             }
             CharType.ProtoBoy->{
-                overlayChar = ProtoBoy(overlayCharView,overlayChatView)
+                overlayChar = ProtoBoy(overlayCharView,overlayChatView,this)
             }
         }
 
         layoutParams = overlayChar.paramInitChar
+
+        /////////////////////////////////////////////TestCode
+
+
+        //////////////////////////////////////////////
+
         windowManager.addView(overlayChar.chatView,overlayChar.paramInitChat)
         windowManager.addView(overlayChar.v,overlayChar.paramInitChar)
+
         overlayChar.layoutParamsChar.observe(this, Observer {
             windowManager.updateViewLayout(overlayChar.v,it)
             layoutParams = it
         })
-        overlayChar.layoutParamsChat.observe(this,Observer{
-            windowManager.updateViewLayout(overlayChar.chatView,it)
-        })
-
         mDetector = GestureDetectorCompat(this,GestureListener())
         overlayCharView.imageview_overlay_character.setOnTouchListener { v, event ->
             when(event.action){
                 MotionEvent.ACTION_UP->{
-                    overlayChar.changeToNormalImg()
-                    isAnimStart = false
+                    if(isAnimStart) {
+                        overlayChar.changeToNormalImg()
+                        val tmpParams = WindowManager.LayoutParams()
+                        tmpParams.copyFrom(layoutParams)
+                        tmpParams.y -= overlayChar.v.height / 2
+                        windowManager.addView(overlayChar.chatView, tmpParams)
+                        isAnimStart = false
+                    }
                 }
             }
             mDetector.onTouchEvent(event)
@@ -83,17 +92,22 @@ class OverlayService: LifecycleService() {
 
     inner class GestureListener: GestureDetector.SimpleOnGestureListener() {
         private var preY:Int? =null
+
+        override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
+            overlayChar.setRandomChat()
+            return super.onSingleTapConfirmed(e)
+        }
         override fun onScroll(
             e1: MotionEvent?,
             e2: MotionEvent?,
             distanceX: Float,
             distanceY: Float
         ): Boolean {
-            if(!isAnimStart) {
+            if(!isAnimStart){
+                windowManager.removeView(overlayChatView)
                 overlayChar.changeToMoveAnim().start()
                 isAnimStart = true
             }
-
 
             if(e2!=null) {
                 if(preY==null) {
@@ -108,6 +122,10 @@ class OverlayService: LifecycleService() {
                 }
             }
             return super.onScroll(e1, e2, distanceX, distanceY)
+        }
+
+        override fun onDoubleTap(e: MotionEvent?): Boolean {
+            return super.onDoubleTap(e)
         }
     }
 }

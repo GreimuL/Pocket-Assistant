@@ -1,5 +1,6 @@
 package com.greimul.pocketassistant.Characters
 
+import android.content.Context
 import android.graphics.PixelFormat
 import android.graphics.drawable.AnimationDrawable
 import android.util.Log
@@ -14,11 +15,11 @@ import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.android.synthetic.main.overlay_character.view.*
 
-open class CharacterStandard(val v:View,val chatView:View){
+open class CharacterStandard(val v:View,val chatView:View,c:Context): ViewModel() {
     var paramInitChar:WindowManager.LayoutParams
     var paramInitChat:WindowManager.LayoutParams
     val layoutParamsChar: MutableLiveData<WindowManager.LayoutParams>
-    val layoutParamsChat:MutableLiveData<WindowManager.LayoutParams>
+    val layoutParamsChat:WindowManager.LayoutParams
     init{
         paramInitChar = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
@@ -43,25 +44,22 @@ open class CharacterStandard(val v:View,val chatView:View){
         paramInitChat.y -= v.height
 
         layoutParamsChar = MutableLiveData<WindowManager.LayoutParams>(paramInitChar)
-        layoutParamsChat = MutableLiveData<WindowManager.LayoutParams>(paramInitChat)
+        layoutParamsChat = paramInitChat
     }
 
     fun setParams(params:WindowManager.LayoutParams){
         layoutParamsChar.postValue(params)
-        val tmpParams = WindowManager.LayoutParams()
-        tmpParams.copyFrom(params)
-        layoutParamsChat.postValue(tmpParams.apply{
-            y -= v.height
-        })
+        layoutParamsChat.copyFrom(params)
     }
 
     open fun changeImage(res:Int){
         v.imageview_overlay_character.apply{
-            setBackgroundResource(res)
+            setImageResource(res)
         }
     }
 
-    open fun changeToMoveAnim():AnimationDrawable = v.imageview_overlay_character.background as AnimationDrawable
+    open fun changeToMoveAnim():AnimationDrawable = v.imageview_overlay_character.drawable as AnimationDrawable
     open fun changeToNormalImg(){}
-
+    open fun setChat(str:String){}
+    open fun setRandomChat(){}
 }
