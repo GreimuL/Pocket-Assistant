@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">PocketAssistant</string>
     <string name="splash_main_text">Pocket Assistant</string>
+
+    <string-array name="whiteCatChat">
+        <item>Nyang~(안녕)</item>
+        <item>Nyang~(심심해요)</item>
+        <item>Nyang~(화이팅!)</item>
+    </string-array>
+    <string-array name="protoBoyChat">
+        <item>안녕하세요</item>
+        <item>저는 가장 먼저 만들어진 캐릭터에요.</item>
+        <item>ㅎㅎㅎㅎ</item>
+    </string-array>
 </resources>
